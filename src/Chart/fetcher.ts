@@ -1,7 +1,5 @@
 import Bar from './bar'
 
-import type Chart from './index'
-
 import type { ILoadDataDTO } from 'types'
 
 export default class Fetcher {
