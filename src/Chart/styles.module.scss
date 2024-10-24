@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+
+    gap:10px;
+
+    >label {
+        font-size: 24px;
+    }
+
+    >canvas { 
+        margin: 0;
+    }
+}
