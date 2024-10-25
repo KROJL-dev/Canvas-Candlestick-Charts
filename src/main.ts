@@ -1,8 +1,7 @@
 import Fetcher from 'Chart/fetcher'
-
 import Chart from 'Chart'
 
-import { charts } from 'utils/const'
+import { charts } from 'const'
 
 const init = async () => {
   charts.forEach(async pair => {

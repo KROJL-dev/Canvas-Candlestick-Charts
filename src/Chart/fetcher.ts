@@ -1,6 +1,4 @@
-import Bar from './bar'
-
-import type { ILoadDataDTO } from 'types'
+import type { ILoadDataDTO, IBar } from 'types'
 
 export default class Fetcher {
   constructor(public pair: string) {
@@ -11,11 +9,18 @@ export default class Fetcher {
   private start: number
   private end: number
 
-  private processDataToBar(data: ILoadDataDTO): Bar[] {
+  private processDataToBar(data: ILoadDataDTO): IBar[] {
     return data.Bars.map(
       (bar, index) =>
-        new Bar(data.ChunkStart + bar.Time, bar.Open, bar.High, bar.Low, bar.Close, index)
-    ) as Bar[]
+        ({
+          time: data.ChunkStart + bar.Time,
+          open: bar.Open,
+          high: bar.High,
+          low: bar.Low,
+          close: bar.Close,
+          index: index,
+        }) as IBar
+    )
   }
 
   private async loadChartsData(): Promise<ILoadDataDTO[]> {
@@ -36,7 +41,7 @@ export default class Fetcher {
     this.start = start
     this.end = end
 
-    let newData: Bar[] = []
+    let newData: IBar[] = []
     const fetchedData = await this.loadChartsData()
 
     fetchedData.forEach(item => {

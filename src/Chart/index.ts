@@ -1,17 +1,18 @@
-import type Bar from './bar'
-import ViewPort from 'ViewPort/index'
-
 import dayjs from 'dayjs'
 
-import { XTick, YTick, gridColor } from 'utils/const'
+import ViewPort from 'ViewPort/index'
+
+import type { IBar } from 'types'
+
+import { XTick, YTick, gridColor } from 'const'
 
 import styles from './styles.module.scss'
 
 export default class Chart {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
-  private bars: Bar[] = []
-  private currentBars: Bar[] = []
+  private bars: IBar[] = []
+  private currentBars: IBar[] = []
   private viewport: ViewPort = new ViewPort()
   private counterOfRenderedBars = 0
 
@@ -45,7 +46,7 @@ export default class Chart {
     this.render()
   }
 
-  public loadBars(bars: Bar[]) {
+  public loadBars(bars: IBar[]) {
     this.bars = bars
     this.render()
   }
@@ -71,7 +72,7 @@ export default class Chart {
       this.drawBar(x + 100, barWidth, bar, index)
     })
   }
-  private drawYGrid(bar: Bar, targetX: number) {
+  private drawYGrid(bar: IBar, targetX: number) {
     const { height } = this.canvas
 
     this.ctx.strokeStyle = gridColor
@@ -87,7 +88,7 @@ export default class Chart {
     this.ctx.fillText(dayjs(bar?.time * 1000).format('DD/MM/YYYY HH:mm'), targetX - 30, height - 5)
   }
 
-  private drawBar(x: number, barWidth: number, bar: Bar, index: number) {
+  private drawBar(x: number, barWidth: number, bar: IBar, index: number) {
     const { open, high, low, close } = bar
 
     const color = close >= open ? 'green' : 'red'
